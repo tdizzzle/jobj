@@ -3,6 +3,7 @@ package obj;
 import java.util.ArrayList;
 import java.util.List;
 
+import space.render;
 import utils.Triangle;
 import utils.Vertex;
 
@@ -32,7 +33,7 @@ public class importer {
      * each key does something
      */
 
-    public List<Triangle> decode(String filename) {
+    public List<? extends render> decode(String filename) {
 
         // read file
         // map of vertexes
