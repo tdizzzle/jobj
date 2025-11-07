@@ -11,9 +11,11 @@ public class Vertex {
         this.z = z;
     }
 
-    public void zoom(double scaleFactor) {
-        this.x *= scaleFactor;
-        this.y *= scaleFactor;
-        this.z *= scaleFactor;
+    // Copy constructor
+    public Vertex(Vertex other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.z = other.z;
     }
+
 }

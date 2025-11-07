@@ -1,6 +1,8 @@
-package utils;
+package transformers;
 
-public class Matrix3 {
+import utils.Vertex;
+
+public class Matrix3 implements transformer {
     public double[] values;
 
     public Matrix3(double[] var1) {
