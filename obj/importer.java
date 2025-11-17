@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import space.render;
+import utils.Square;
 import utils.Triangle;
 import utils.Vertex;
 
@@ -41,7 +42,7 @@ public class importer {
 
         // @TODO read through the file and see how many vaces /vertices are used
         List<Vertex> vertices = new ArrayList<>();
-        List<Triangle> faces = new ArrayList<>();
+        List<render> faces = new ArrayList<>();
 
         try (Reader reader = new FileReader(filename);
                 BufferedReader bufferedReader = new BufferedReader(reader)) {
@@ -60,6 +61,7 @@ public class importer {
                         String vertex = line.substring(2);
                         String[] subVertexes = vertex.split(" ");
                         System.out.println(subVertexes.length);
+                        System.out.println(subVertexes.toString());
                         if (subVertexes.length != 3) {
                             continue;
                         }
@@ -71,7 +73,7 @@ public class importer {
                                         Double.parseDouble(subVertexes[2])));
 
                         System.out.println(vertices.size());
-
+                        System.out.println("---------------");
                         break;
                     case 'f':
 
@@ -86,17 +88,24 @@ public class importer {
                             }
                         }
 
-                        // trim the spaces
-                        if (cleanFaceVertexes.size() != 3) {
-                            continue;
+                        switch (cleanFaceVertexes.size()) {
+                            case 3:
+                                faces.add(new Triangle(
+                                        // -1 as obj arrays start at 1
+                                        vertices.get(Integer.parseInt(cleanFaceVertexes.get(0)) - 1),
+                                        vertices.get(Integer.parseInt(cleanFaceVertexes.get(1)) - 1),
+                                        vertices.get(Integer.parseInt(cleanFaceVertexes.get(2)) - 1),
+                                        Color.ORANGE));
+                            case 4:
+                                faces.add(
+                                        new Square(
+                                                // -1 as obj arrays start at 1
+                                                vertices.get(Integer.parseInt(cleanFaceVertexes.get(0)) - 1),
+                                                vertices.get(Integer.parseInt(cleanFaceVertexes.get(1)) - 1),
+                                                vertices.get(Integer.parseInt(cleanFaceVertexes.get(2)) - 1),
+                                                vertices.get(Integer.parseInt(cleanFaceVertexes.get(3)) - 1),
+                                                Color.ORANGE));
                         }
-
-                        faces.add(new Triangle(
-                                // -1 as obj arrays start at 1
-                                vertices.get(Integer.parseInt(cleanFaceVertexes.get(0)) - 1),
-                                vertices.get(Integer.parseInt(cleanFaceVertexes.get(1)) - 1),
-                                vertices.get(Integer.parseInt(cleanFaceVertexes.get(2)) - 1),
-                                Color.ORANGE));
                         System.err.println(faces.getLast().toString());
                         break;
                     default:
@@ -111,7 +120,7 @@ public class importer {
 
         System.out.println(vertices.toString());
         System.out.println(faces.toString());
-       
+
         return faces;
     }
 

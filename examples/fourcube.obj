@@ -1,0 +1,27 @@
+# Cube.obj
+# A unit cube centered at the origin
+# Each face is made up of 4 vertices
+
+# Vertices
+v -0.5 -0.5 -0.5
+v 0.5 -0.5 -0.5
+v 0.5 0.5 -0.5
+v -0.5 0.5 -0.5
+v -0.5 -0.5 0.5
+v 0.5 -0.5 0.5
+v 0.5 0.5 0.5
+v -0.5 0.5 0.5
+
+# Faces (each uses 4 vertices)
+f 1 2 3 4
+# back face
+f 5 6 7 8 
+# front face
+f 1 5 8 4
+# left face
+f 2 6 7 3
+# right face
+f 4 3 7 8
+# top face
+f 1 2 6 5
+# bottom face

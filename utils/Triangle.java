@@ -31,26 +31,15 @@ public class Triangle implements render {
         Vertex tV2 = new Vertex(v2);
         Vertex tV3 = new Vertex(v3);
      
+        // run through all the transforms on the new 
+        // vertexes
         for (transformer t : transforms) {
             tV1 = t.transform(tV1);
             tV2 = t.transform(tV2);
             tV3 = t.transform(tV3);
         }
    
-
-        // Vertex v1 = transform.transform(this.v1);
-        // v1.zoom(zoom);
-        // v1.x += getWidth() / 2;
-        // v1.y += getHeight() / 2;
-        // Vertex v2 = transform.transform(this.v2);
-        // v2.zoom(zoom);
-        // v2.x += getWidth() / 2;
-        // v2.y += getHeight() / 2;
-        // Vertex v3 = transform.transform(this.v3);
-        // v3.zoom(zoom);
-        // v3.x += getWidth() / 2;
-        // v3.y += getHeight() / 2;
-
+        // calculate the normal vector for a triangle
         Vertex ab = new Vertex(tV2.x - tV1.x, tV2.y - tV1.y, tV2.z - tV1.z);
         Vertex ac = new Vertex(tV3.x - tV1.x, tV3.y - tV1.y, tV3.z - tV1.z);
         Vertex norm = new Vertex(

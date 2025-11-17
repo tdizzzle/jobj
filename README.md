@@ -10,7 +10,9 @@ First thoughts
 - more colours
 - export to image?
 - add tabs to the top tool bar
+- update triangle documentation and update to include squares as an object
 - once some basic rendering has happend? Then what where does it go
+- tests
 
 
 ### Tool bar design
