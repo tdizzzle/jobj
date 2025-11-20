@@ -62,9 +62,12 @@ public class importer {
                         String[] subVertexes = vertex.split(" ");
                         System.out.println(subVertexes.length);
                         System.out.println(subVertexes.toString());
-                        if (subVertexes.length != 3) {
-                            continue;
-                        }
+                        // if (subVertexes.length != 3) {
+                        //     continue;
+                        // }
+
+                        // ignore the 4th vertex for the moment
+                        // @TODO make a cleaner implementation
 
                         vertices.add(
                                 new Vertex(
@@ -87,7 +90,6 @@ public class importer {
                                 cleanFaceVertexes.add(fv);
                             }
                         }
-
                         switch (cleanFaceVertexes.size()) {
                             case 3:
                                 faces.add(new Triangle(
@@ -96,6 +98,7 @@ public class importer {
                                         vertices.get(Integer.parseInt(cleanFaceVertexes.get(1)) - 1),
                                         vertices.get(Integer.parseInt(cleanFaceVertexes.get(2)) - 1),
                                         Color.ORANGE));
+                                break;
                             case 4:
                                 faces.add(
                                         new Square(
@@ -105,6 +108,7 @@ public class importer {
                                                 vertices.get(Integer.parseInt(cleanFaceVertexes.get(2)) - 1),
                                                 vertices.get(Integer.parseInt(cleanFaceVertexes.get(3)) - 1),
                                                 Color.ORANGE));
+                            break;
                         }
                         System.err.println(faces.getLast().toString());
                         break;

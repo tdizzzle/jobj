@@ -26,7 +26,6 @@ public class Square implements render {
     public void renderFace(BufferedImage img, double[] zBuffer, transformer... transforms) {
 
         shade shader = new shade();
-
         // create duplicate that are transforms to
         // prevent permanently changing the class values
         Vertex tV1 = new Vertex(v1);
@@ -58,7 +57,7 @@ public class Square implements render {
         norm.z /= normalLength;
 
         double angleCos = Math.abs(norm.z);
-
+        
         int minX = (int) Math.max(0, Math.ceil(Math.min(tV4.x, Math.min(tV1.x, Math.min(tV2.x, tV3.x)))));
         int maxX = (int) Math.min(img.getWidth() - 1,
                 Math.floor(Math.max(tV4.x, Math.max(tV1.x, Math.max(tV2.x, tV3.x)))));
@@ -67,14 +66,13 @@ public class Square implements render {
                 Math.floor(Math.max(tV4.y, Math.max(tV1.y, Math.max(tV2.y, tV3.y)))));
 
         // get the area of the two triangles of the square
-        double lefTriangleArea = (tV1.y - tV4.y) * (tV2.x - tV4.x) + (tV2.y - tV4.y) * (tV4.x - tV1.x);
+        double lefTriangleArea = (tV4.y - tV2.y) * (tV1.x - tV2.x) + (tV1.y - tV2.y) * (tV2.x - tV4.x);
         double rightTriangleArea = (tV2.y - tV4.y) * (tV3.x - tV4.x) + (tV3.y - tV4.y) * (tV4.x - tV2.x);
 
         for (int y = minY; y <= maxY; y++) {
             for (int x = minX; x <= maxX; x++) {
-
-                Vertex inside =  insideSquare(tV1, tV2, tV3, tV4, maxX, maxY, lefTriangleArea, rightTriangleArea);
-               
+                // todo fix as soon as the angles change from a flat plane, half the square dissapear
+                Vertex inside =  insideSquare(tV1, tV2, tV3, tV4, x, y, lefTriangleArea, rightTriangleArea);
                 if (inside != null) {
                     double depth = inside.x * tV1.z + inside.y * tV2.z + inside.z * tV3.z;
                     int zIndex = y * img.getWidth() + x;
@@ -91,7 +89,7 @@ public class Square implements render {
     public Vertex insideSquare(Vertex tV1, Vertex tV2, Vertex tV3, Vertex tV4, int x, int y, double leftTriangleArea,
             double rightTriangleArea) {
 
-        Vertex center = insideTriangle(tV1, tV2, tV4, x, y, leftTriangleArea);
+        Vertex center = insideTriangle(tV4, tV1, tV2, x, y, leftTriangleArea);
 
         if (center != null) {
             return center;
@@ -109,7 +107,6 @@ public class Square implements render {
         double b1 = ((y - tV3.y) * (tV2.x - tV3.x) + (tV2.y - tV3.y) * (tV3.x - x)) / triangleArea;
         double b2 = ((y - tV1.y) * (tV3.x - tV1.x) + (tV3.y - tV1.y) * (tV1.x - x)) / triangleArea;
         double b3 = ((y - tV2.y) * (tV1.x - tV2.x) + (tV1.y - tV2.y) * (tV2.x - x)) / triangleArea;
-        // double b4 =
 
         if (b1 >= 0 && b1 <= 1 && b2 >= 0 && b2 <= 1 && b3 >= 0 && b3 <= 1){
             return new Vertex(b1, b2, b3);
